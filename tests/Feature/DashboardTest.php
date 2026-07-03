@@ -1,0 +1,30 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+final class DashboardTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_guests_are_redirected_to_login_from_dashboard(): void
+    {
+        $response = $this->get('/dashboard');
+
+        $response->assertRedirect('/login');
+    }
+
+    public function test_authenticated_users_can_view_dashboard(): void
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->get('/dashboard');
+
+        $response->assertOk();
+        $response->assertSee('Link cabinet foundation');
+        $response->assertSee('Log out');
+    }
+}

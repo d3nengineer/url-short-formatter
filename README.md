@@ -7,6 +7,37 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## About This Project
+
+This is a Laravel URL short formatter project. The current foundation includes
+session-based authentication for registration, login, logout, and a protected
+dashboard at `/dashboard`.
+
+### Local Development
+
+```bash
+composer install
+npm install
+php artisan migrate
+npm run dev
+php artisan serve
+```
+
+### Authentication
+
+- Guests can register at `/register` and sign in at `/login`.
+- Authenticated users are redirected to `/dashboard`.
+- The dashboard is protected by Laravel's `auth` middleware.
+- Logout is handled by `POST /logout`.
+
+### Verification
+
+```bash
+./vendor/bin/pint
+php artisan test
+npm run build
+```
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
