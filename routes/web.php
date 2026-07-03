@@ -6,4 +6,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::view('/dashboard', 'dashboard')
+    ->middleware('auth')
+    ->name('dashboard');
+
 require __DIR__.'/auth.php';
