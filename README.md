@@ -35,10 +35,22 @@ php artisan serve
 - Authenticated users can submit a destination URL from `/dashboard`.
 - `POST /short-links` validates and trims the submitted `original_url`, accepts
   only `http` and `https` URLs, and stores a unique generated slug.
-- After creation, the dashboard shows the generated short URL. Public redirect
-  behavior is planned separately.
+- After creation, the dashboard shows the generated short URL.
 - Submitted URLs must not be logged in full because query strings can contain
   private tokens or other sensitive values.
+
+### Public Redirect Tracking
+
+- Public short links resolve through `GET /{slug}` for slugs containing letters,
+  numbers, underscores, and hyphens.
+- A slug redirects only when the short link exists, is not soft-deleted, is not
+  disabled, and is not expired. Unavailable slugs return a Laravel 404 response.
+- Successful redirects create a `redirect_clicks` row with the short link id,
+  visitor IP address, optional user agent, and timestamps, then update
+  `short_links.last_redirected_at` in the same database transaction.
+- Redirect logs may include internal ids, slugs, and safe unavailable reasons,
+  but must not include full destination URLs, raw cookies, full user-agent
+  values, or private query-string data.
 
 ### Verification
 
