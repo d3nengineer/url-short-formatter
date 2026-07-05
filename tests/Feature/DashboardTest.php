@@ -24,7 +24,8 @@ final class DashboardTest extends TestCase
         $response = $this->actingAs($user)->get('/dashboard');
 
         $response->assertOk();
-        $response->assertSee('Link cabinet foundation');
+        $response->assertSee('Create a short link');
+        $response->assertSee('Destination URL');
         $response->assertSee('Log out');
     }
 }

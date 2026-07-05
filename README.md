@@ -30,6 +30,16 @@ php artisan serve
 - The dashboard is protected by Laravel's `auth` middleware.
 - Logout is handled by `POST /logout`.
 
+### Short Link Creation
+
+- Authenticated users can submit a destination URL from `/dashboard`.
+- `POST /short-links` validates and trims the submitted `original_url`, accepts
+  only `http` and `https` URLs, and stores a unique generated slug.
+- After creation, the dashboard shows the generated short URL. Public redirect
+  behavior is planned separately.
+- Submitted URLs must not be logged in full because query strings can contain
+  private tokens or other sensitive values.
+
 ### Verification
 
 ```bash
