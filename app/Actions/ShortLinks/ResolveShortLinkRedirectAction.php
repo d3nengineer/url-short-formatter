@@ -34,13 +34,17 @@ final class ResolveShortLinkRedirectAction
                     );
                 }
 
+                $redirectedAt = now();
+
                 $shortLink->redirectClicks()->create([
                     'visitor_ip' => (string) $request->ip(),
                     'user_agent' => $this->safeUserAgent($request),
+                    'created_at' => $redirectedAt,
+                    'updated_at' => $redirectedAt,
                 ]);
 
                 $shortLink->forceFill([
-                    'last_redirected_at' => now(),
+                    'last_redirected_at' => $redirectedAt,
                 ])->save();
 
                 return ResolveShortLinkRedirectResult::available(
